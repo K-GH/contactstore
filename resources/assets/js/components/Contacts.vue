@@ -1,6 +1,6 @@
 <template>
     <div class="">
-            <h1>Contact</h1>
+            <h1>Add Contact</h1>
             <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
 
                   <div class="form-group">
@@ -23,6 +23,16 @@
 
                   </div>
             </form>
+
+            <h1>Contacts</h1>
+            <ul class="list-group">
+                  <li v-for="contact in list " class="list-group-item">
+                    <strong>{{contact.name}} </strong>  {{contact.email}} {{contact.phone}}
+
+                    <button @click="showContact(contact.id)" class="btn btn-default btn-xs">Edit</button>
+                    <button @click="deleteContact(contact.id)" class="btn btn-danger btn-xs">Delete</button>
+                  </li>
+            </ul>
     </div>
 
 </template>
