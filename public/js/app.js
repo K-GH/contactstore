@@ -1909,6 +1909,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log(error);
       });
     },
+    showContact: function showContact(id) {
+      var self = this;
+      axios.get('api/contact/' + id).then(function (response) {
+        self.contact.id = response.data.id;
+        self.contact.name = response.data.name;
+        self.contact.email = response.data.email;
+        self.contact.phone = response.data.phone;
+      });
+      self.edit = true;
+    },
     updateContact: function updateContact(id) {
       //console.log('update work')
       return;

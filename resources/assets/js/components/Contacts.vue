@@ -87,6 +87,18 @@
               });
 
          },
+         showContact: function(id){
+           let self=this;
+           axios.get('api/contact/'+id)
+              .then(function(response){
+                  self.contact.id=response.data.id;
+                  self.contact.name=response.data.name;
+                  self.contact.email=response.data.email;
+                  self.contact.phone=response.data.phone;
+
+              })
+              self.edit=true
+         },
          updateContact: function(id){
             //console.log('update work')
               return;
