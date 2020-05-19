@@ -1865,12 +1865,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
 
+  //init values in data function
+  data: function data() {
     return {
-      //if he select btn of !edit (create)
-      edit: false,
+      edit: false, //because by dafault is create not edit btn
+      //create list array to assign data from Api request
       list: [],
+      //create object
       contact: {
         id: '',
         name: '',
@@ -1881,6 +1883,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     console.log('Contacts component loaded...');
+    //call fetchContactList() to show data
     this.fetchContactList();
   },
   methods: {
@@ -1896,7 +1899,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     createContact: function createContact() {
-      //  console.log('create work')
+      //  console.log('create worked')
       var self = this;
       var params = Object.assign({}, self.contact);
       axios.post('api/contact/store', params).then(function () {
@@ -1920,8 +1923,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       self.edit = true;
     },
     updateContact: function updateContact(id) {
-      //console.log('update work')
-      return;
+      console.log('update work' + id);
+      var self = this;
+      var params = Object.assign({}, self.contact);
+      axios.patch('api/contact/' + id, params).then(function () {
+        self.contact.name = '';
+        self.contact.email = '';
+        self.contact.phone = '';
+        self.edit = false;
+        self.fetchContactList();
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }
 });

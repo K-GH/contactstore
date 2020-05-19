@@ -40,12 +40,14 @@
 
 <script>
     export default {
-       data: function(){
 
+        //init values in data function
+       data: function(){
           return {
-            //if he select btn of !edit (create)
-            edit:false,
+            edit:false,//because by dafault is create not edit btn
+            //create list array to assign data from Api request
             list:[],
+            //create object
             contact:{
               id:'',
               name:'',
@@ -56,6 +58,7 @@
        },
        mounted: function(){
           console.log('Contacts component loaded...');
+          //call fetchContactList() to show data
           this.fetchContactList();
        },
        methods: {
@@ -71,7 +74,7 @@
                });
          },
          createContact: function(){
-          //  console.log('create work')
+          //  console.log('create worked')
           let self =this;
           let params= Object.assign({}, self.contact);
           axios.post('api/contact/store',params)
@@ -97,11 +100,23 @@
                   self.contact.phone=response.data.phone;
 
               })
-              self.edit=true
+              self.edit=true;
          },
          updateContact: function(id){
-            //console.log('update work')
-              return;
+            console.log('update work'+id)
+            let self =this;
+            let params= Object.assign({}, self.contact);
+            axios.patch('api/contact/'+id,params)
+                .then(function(){
+                  self.contact.name='';
+                  self.contact.email='';
+                  self.contact.phone='';
+                  self.edit=false;
+                  self.fetchContactList();
+                })
+                .catch((error)=>{
+                    console.log(error);
+                });
          }
        }
     }
