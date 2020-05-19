@@ -112,11 +112,21 @@
                   self.contact.email='';
                   self.contact.phone='';
                   self.edit=false;
-                  self.fetchContactList();
+
                 })
                 .catch((error)=>{
                     console.log(error);
                 });
+         },
+         deleteContact: function(id){
+              let self =this;
+              axios.delete('api/contact/'+id)
+                .then(function(response){
+                    self.fetchContactList();
+                })
+                .catch((error)=>{
+                    console.log(error);
+                })
          }
        }
     }

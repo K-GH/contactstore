@@ -1931,6 +1931,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         self.contact.email = '';
         self.contact.phone = '';
         self.edit = false;
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    deleteContact: function deleteContact(id) {
+      var self = this;
+      axios.delete('api/contact/' + id).then(function (response) {
         self.fetchContactList();
       }).catch(function (error) {
         console.log(error);
