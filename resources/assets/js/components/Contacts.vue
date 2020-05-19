@@ -1,0 +1,86 @@
+<template>
+    <div class="">
+            <h1>Contact</h1>
+            <form action="#" @submit.prevent="edit ? updateContact(contact.id) : createContact()">
+
+                  <div class="form-group">
+                      <label>Name</label>
+                      <input v-model='contact.name' type="text" name="name" class="form-control">
+                  </div>
+
+                  <div class="form-group">
+                      <label>E-mail</label>
+                      <input v-model='contact.email' type="text" name="email" class="form-control">
+                  </div>
+
+                  <div class="form-group">
+                      <label>Phone</label>
+                      <input v-model='contact.phone' type="text" name="phone" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <button v-show="!edit" type="submit" name="button" class="btn btn-primary">New Contact</button>
+                    <button v-show="edit" type="submit" name="button" class="btn btn-primary">Update Contact</button>
+
+                  </div>
+            </form>
+    </div>
+
+</template>
+
+
+<script>
+    export default {
+       data: function(){
+
+          return {
+            //if he select btn of !edit (create)
+            edit:false,
+            list:[],
+            contact:{
+              id:'',
+              name:'',
+              email:'',
+              phone:''
+            }
+          }
+       },
+       mounted: function(){
+          console.log('Contacts component loaded...');
+          this.fetchContactList();
+       },
+       methods: {
+         fetchContactList: function(){
+           console.log('fetching contacts....');
+           axios.get('api/contacts')
+              .then((response) => {
+                    console.log(response.data);
+                    this.list = response.data;
+
+               }).catch((error) => {
+                    console.log(error);
+               });
+         },
+         createContact: function(){
+          //  console.log('create work')
+          let self =this;
+          let params= Object.assign({}, self.contact);
+          axios.post('api/contact/store',params)
+              .then(function(){
+                self.contact.name='';
+                self.contact.email='';
+                self.contact.phone='';
+                self.edit=false;
+                self.fetchContactList();
+              })
+              .catch((error)=>{
+                  console.log(error);
+              });
+
+         },
+         updateContact: function(id){
+            //console.log('update work')
+              return;
+         }
+       }
+    }
+</script>
